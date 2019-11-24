@@ -1,0 +1,28 @@
+* nat
+:OUTPUT ACCEPT [0:0]
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+
+COMMIT
+
+* filter
+:INPUT DROP [0:0]
+:OUTPUT DROP [0:0]
+:FORWARD DROP [0:0]
+-A FORWARD -p udp --sport 2013:2041 --dport 51140:51169 -s 16.0.0.0/4 -d 64.0.0.0/4 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 51140:51169 --dport 2013:2041 -s 64.0.0.0/4 -d 16.0.0.0/4 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 11634:11642 --dport 45078:45101 -s 64.0.0.0/4 -d 16.0.0.0/4 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 45078:45101 --dport 11634:11642 -s 16.0.0.0/4 -d 64.0.0.0/4 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 23855:23930 --dport 22021:22106 -s 64.0.0.0/4 -d 16.0.0.0/4 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 1771:1862 --dport 37871:37887 -s 48.0.0.0/4 -d 64.0.0.0/4 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 37871:37887 --dport 1771:1862 -s 64.0.0.0/4 -d 48.0.0.0/4 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 52720:52757 --dport 4034:4048 -s 32.0.0.0/4 -d 64.0.0.0/4 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 4034:4048 --dport 52720:52757 -s 64.0.0.0/4 -d 32.0.0.0/4 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 34300:34353 --dport 15774:15795 -s 32.0.0.0/4 -d 64.0.0.0/4 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 15774:15795 --dport 34300:34353 -s 64.0.0.0/4 -d 32.0.0.0/4 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 2608:2671 --dport 24502:24514 -s 64.0.0.0/4 -d 32.0.0.0/4 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 24502:24514 --dport 2608:2671 -s 32.0.0.0/4 -d 64.0.0.0/4 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 3672:3763 --dport 30174:30253 -s 32.0.0.0/4 -d 64.0.0.0/4 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 30174:30253 --dport 3672:3763 -s 64.0.0.0/4 -d 32.0.0.0/4 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+
+COMMIT

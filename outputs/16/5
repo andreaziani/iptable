@@ -1,0 +1,23 @@
+* nat
+:OUTPUT ACCEPT [0:0]
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+
+COMMIT
+
+* filter
+:INPUT DROP [0:0]
+:OUTPUT DROP [0:0]
+:FORWARD DROP [0:0]
+-A FORWARD -p tcp --sport 3336:3432 --dport 26350:26390 -s 80.0.0.0/4 -d 96.0.0.0/4 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 26350:26390 --dport 3336:3432 -s 96.0.0.0/4 -d 80.0.0.0/4 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 23477:23487 --dport 54069:54085 -s 112.0.0.0/4 -d 96.0.0.0/4 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 54069:54085 --dport 23477:23487 -s 96.0.0.0/4 -d 112.0.0.0/4 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 35239:35334 --dport 47853:47938 -s 96.0.0.0/4 -d 80.0.0.0/4 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 47853:47938 --dport 35239:35334 -s 80.0.0.0/4 -d 96.0.0.0/4 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 58404:58409 --dport 31358:31438 -s 112.0.0.0/4 -d 96.0.0.0/4 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 31358:31438 --dport 58404:58409 -s 96.0.0.0/4 -d 112.0.0.0/4 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 64.0.0.0/4 -d 96.0.0.0/4 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 96.0.0.0/4 -d 64.0.0.0/4 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+COMMIT

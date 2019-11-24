@@ -1,0 +1,26 @@
+* nat
+:OUTPUT ACCEPT [0:0]
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+
+COMMIT
+
+* filter
+:INPUT DROP [0:0]
+:OUTPUT DROP [0:0]
+:FORWARD DROP [0:0]
+-A FORWARD -p udp --sport 27468:27528 --dport 10440:10451 -s 64.0.0.0/4 -d 16.0.0.0/4 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 10440:10451 --dport 27468:27528 -s 16.0.0.0/4 -d 64.0.0.0/4 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 50481:50537 --dport 43795:43861 -s 0.0.0.0/4 -d 48.0.0.0/4 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 43795:43861 --dport 50481:50537 -s 48.0.0.0/4 -d 0.0.0.0/4 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 45244:45315 --dport 51170:51230 -s 16.0.0.0/4 -d 48.0.0.0/4 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 51170:51230 --dport 45244:45315 -s 48.0.0.0/4 -d 16.0.0.0/4 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 46502:46588 --dport 33590:33689 -s 16.0.0.0/4 -d 64.0.0.0/4 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 24698:24779 --dport 54952:55014 -s 16.0.0.0/4 -d 32.0.0.0/4 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 54952:55014 --dport 24698:24779 -s 32.0.0.0/4 -d 16.0.0.0/4 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 46665:46677 --dport 10020:10069 -s 48.0.0.0/4 -d 16.0.0.0/4 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 10020:10069 --dport 46665:46677 -s 16.0.0.0/4 -d 48.0.0.0/4 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 63493:63534 --dport 44201:44201 -s 32.0.0.0/4 -d 16.0.0.0/4 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 44201:44201 --dport 63493:63534 -s 16.0.0.0/4 -d 32.0.0.0/4 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+
+COMMIT

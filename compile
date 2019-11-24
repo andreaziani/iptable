@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "Compiling"
+
+export GOPATH=$(pwd)
+go get github.com/jessevdk/go-flags
+go build "$GOPATH"/src/main.go
+

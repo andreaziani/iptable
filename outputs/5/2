@@ -1,0 +1,26 @@
+* nat
+:OUTPUT ACCEPT [0:0]
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+
+COMMIT
+
+* filter
+:INPUT DROP [0:0]
+:OUTPUT DROP [0:0]
+:FORWARD DROP [0:0]
+-A FORWARD -p udp --sport 1284:1305 --dport 46045:46142 -s 32.0.0.0/4 -d 48.0.0.0/4 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 46045:46142 --dport 1284:1305 -s 48.0.0.0/4 -d 32.0.0.0/4 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 50485:50522 --dport 50623:50702 -s 64.0.0.0/4 -d 32.0.0.0/4 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 50623:50702 --dport 50485:50522 -s 32.0.0.0/4 -d 64.0.0.0/4 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 17595:17662 --dport 17350:17429 -s 48.0.0.0/4 -d 32.0.0.0/4 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 17350:17429 --dport 17595:17662 -s 32.0.0.0/4 -d 48.0.0.0/4 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 24551:24636 --dport 54835:54865 -s 64.0.0.0/4 -d 32.0.0.0/4 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 16728:16740 --dport 39567:39591 -s 48.0.0.0/4 -d 16.0.0.0/4 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 39567:39591 --dport 16728:16740 -s 16.0.0.0/4 -d 48.0.0.0/4 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 61048:61050 --dport 11264:11346 -s 16.0.0.0/4 -d 48.0.0.0/4 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 11264:11346 --dport 61048:61050 -s 48.0.0.0/4 -d 16.0.0.0/4 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 50878:50879 --dport 60098:60102 -s 64.0.0.0/4 -d 16.0.0.0/4 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 60098:60102 --dport 50878:50879 -s 16.0.0.0/4 -d 64.0.0.0/4 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+
+COMMIT

@@ -1,0 +1,43 @@
+* nat
+:OUTPUT ACCEPT [0:0]
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+
+COMMIT
+
+* filter
+:INPUT DROP [0:0]
+:OUTPUT DROP [0:0]
+:FORWARD DROP [0:0]
+-A FORWARD -p tcp --sport 10104:10142 --dport 61134:61197 -s 56.0.0.0/5 -d 16.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 61134:61197 --dport 10104:10142 -s 16.0.0.0/5 -d 56.0.0.0/5 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 11441:11537 --dport 55633:55730 -s 56.0.0.0/5 -d 16.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 55633:55730 --dport 11441:11537 -s 16.0.0.0/5 -d 56.0.0.0/5 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 39855:39867 --dport 56294:56308 -s 16.0.0.0/5 -d 64.0.0.0/5 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 56294:56308 --dport 39855:39867 -s 64.0.0.0/5 -d 16.0.0.0/5 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 46832:46923 --dport 65153:65216 -s 40.0.0.0/5 -d 16.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 65153:65216 --dport 46832:46923 -s 16.0.0.0/5 -d 40.0.0.0/5 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 11256:11321 --dport 59852:59919 -s 16.0.0.0/5 -d 56.0.0.0/5 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 59852:59919 --dport 11256:11321 -s 56.0.0.0/5 -d 16.0.0.0/5 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 63841:63856 --dport 28851:28884 -s 16.0.0.0/5 -d 56.0.0.0/5 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 28851:28884 --dport 63841:63856 -s 56.0.0.0/5 -d 16.0.0.0/5 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 8150:8187 --dport 15379:15447 -s 0.0.0.0/5 -d 16.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 15379:15447 --dport 8150:8187 -s 16.0.0.0/5 -d 0.0.0.0/5 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 32.0.0.0/5 -d 16.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 16.0.0.0/5 -d 32.0.0.0/5 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 50132:50139 --dport 44970:44971 -s 56.0.0.0/5 -d 16.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 44970:44971 --dport 50132:50139 -s 16.0.0.0/5 -d 56.0.0.0/5 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 956:992 --dport 51873:51932 -s 16.0.0.0/5 -d 0.0.0.0/5 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 39892:39898 --dport 17324:17348 -s 64.0.0.0/5 -d 16.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 17324:17348 --dport 39892:39898 -s 16.0.0.0/5 -d 64.0.0.0/5 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 13531:13599 --dport 48505:48549 -s 0.0.0.0/5 -d 16.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 48505:48549 --dport 13531:13599 -s 16.0.0.0/5 -d 0.0.0.0/5 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 36344:36442 --dport 23848:23873 -s 16.0.0.0/5 -d 64.0.0.0/5 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 23848:23873 --dport 36344:36442 -s 64.0.0.0/5 -d 16.0.0.0/5 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 6931:7012 --dport 38634:38726 -s 8.0.0.0/5 -d 16.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 23793:23853 --dport 19012:19055 -s 64.0.0.0/5 -d 16.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 19012:19055 --dport 23793:23853 -s 16.0.0.0/5 -d 64.0.0.0/5 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 48.0.0.0/5 -d 16.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 16.0.0.0/5 -d 48.0.0.0/5 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+COMMIT

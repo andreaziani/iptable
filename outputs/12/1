@@ -1,0 +1,56 @@
+* nat
+:OUTPUT ACCEPT [0:0]
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+
+COMMIT
+
+* filter
+:INPUT DROP [0:0]
+:OUTPUT DROP [0:0]
+:FORWARD DROP [0:0]
+-A FORWARD -p udp --sport 52621:52698 --dport 35792:35859 -s 16.0.0.0/5 -d 72.0.0.0/5 -i eth0 -o eth2 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 35792:35859 --dport 52621:52698 -s 72.0.0.0/5 -d 16.0.0.0/5 -i eth2 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 62059:62133 --dport 47597:47642 -s 40.0.0.0/5 -d 56.0.0.0/5 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 47597:47642 --dport 62059:62133 -s 56.0.0.0/5 -d 40.0.0.0/5 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 60700:60792 --dport 1667:1759 -s 24.0.0.0/5 -d 72.0.0.0/5 -i eth0 -o eth2 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 1758:1783 --dport 51387:51402 -s 32.0.0.0/5 -d 40.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 51387:51402 --dport 1758:1783 -s 40.0.0.0/5 -d 32.0.0.0/5 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 15911:15918 --dport 20790:20874 -s 40.0.0.0/5 -d 64.0.0.0/5 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 20790:20874 --dport 15911:15918 -s 64.0.0.0/5 -d 40.0.0.0/5 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 11056:11128 --dport 61995:62044 -s 72.0.0.0/5 -d 56.0.0.0/5 -i eth2 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 61995:62044 --dport 11056:11128 -s 56.0.0.0/5 -d 72.0.0.0/5 -i eth0 -o eth2 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 26813:26831 --dport 18144:18165 -s 40.0.0.0/5 -d 0.0.0.0/5 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 13267:13336 --dport 50225:50305 -s 72.0.0.0/5 -d 16.0.0.0/5 -i eth2 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 50225:50305 --dport 13267:13336 -s 16.0.0.0/5 -d 72.0.0.0/5 -i eth0 -o eth2 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 17392:17410 --dport 25244:25315 -s 8.0.0.0/5 -d 72.0.0.0/5 -i eth0 -o eth2 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 25244:25315 --dport 17392:17410 -s 72.0.0.0/5 -d 8.0.0.0/5 -i eth2 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 38111:38154 --dport 11342:11418 -s 32.0.0.0/5 -d 40.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 18776:18861 --dport 53462:53520 -s 72.0.0.0/5 -d 0.0.0.0/5 -i eth2 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 53462:53520 --dport 18776:18861 -s 0.0.0.0/5 -d 72.0.0.0/5 -i eth0 -o eth2 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 72.0.0.0/5 -d 64.0.0.0/5 -i eth2 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 64.0.0.0/5 -d 72.0.0.0/5 -i eth0 -o eth2 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 26030:26069 --dport 28359:28375 -s 64.0.0.0/5 -d 72.0.0.0/5 -i eth0 -o eth2 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 47273:47342 --dport 8425:8475 -s 72.0.0.0/5 -d 40.0.0.0/5 -i eth2 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 8425:8475 --dport 47273:47342 -s 40.0.0.0/5 -d 72.0.0.0/5 -i eth1 -o eth2 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 62044:62141 --dport 4262:4264 -s 48.0.0.0/5 -d 72.0.0.0/5 -i eth0 -o eth2 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 2607:2664 --dport 43795:43813 -s 40.0.0.0/5 -d 24.0.0.0/5 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 43795:43813 --dport 2607:2664 -s 24.0.0.0/5 -d 40.0.0.0/5 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 42317:42332 --dport 57174:57186 -s 32.0.0.0/5 -d 40.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 57174:57186 --dport 42317:42332 -s 40.0.0.0/5 -d 32.0.0.0/5 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 15392:15457 --dport 64936:64996 -s 72.0.0.0/5 -d 16.0.0.0/5 -i eth2 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 21047:21106 --dport 57399:57451 -s 40.0.0.0/5 -d 24.0.0.0/5 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 14922:14943 --dport 63918:63928 -s 8.0.0.0/5 -d 40.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 32.0.0.0/5 -d 40.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 40.0.0.0/5 -d 32.0.0.0/5 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 57481:57540 --dport 64981:65032 -s 40.0.0.0/5 -d 0.0.0.0/5 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 64981:65032 --dport 57481:57540 -s 0.0.0.0/5 -d 40.0.0.0/5 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 24179:24243 --dport 43034:43090 -s 16.0.0.0/5 -d 40.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 59395:59448 --dport 5746:5793 -s 8.0.0.0/5 -d 72.0.0.0/5 -i eth0 -o eth2 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 5746:5793 --dport 59395:59448 -s 72.0.0.0/5 -d 8.0.0.0/5 -i eth2 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 40.0.0.0/5 -d 24.0.0.0/5 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 24.0.0.0/5 -d 40.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 61776:61818 --dport 11347:11392 -s 0.0.0.0/5 -d 40.0.0.0/5 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 11347:11392 --dport 61776:61818 -s 40.0.0.0/5 -d 0.0.0.0/5 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+
+COMMIT

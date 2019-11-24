@@ -1,0 +1,16 @@
+* nat
+:OUTPUT ACCEPT [0:0]
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+
+COMMIT
+
+* filter
+:INPUT DROP [0:0]
+:OUTPUT DROP [0:0]
+:FORWARD DROP [0:0]
+-A FORWARD -p tcp --sport 8488:8569 --dport 8267:8345 -s 28.0.0.0/7 -d 76.0.0.0/7 -i eth0 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 8267:8345 --dport 8488:8569 -s 76.0.0.0/7 -d 28.0.0.0/7 -i eth1 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 9052:9123 --dport 40525:40562 -s 76.0.0.0/7 -d 32.0.0.0/7 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+COMMIT

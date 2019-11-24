@@ -1,0 +1,98 @@
+* nat
+:OUTPUT ACCEPT [0:0]
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+
+COMMIT
+
+* filter
+:INPUT DROP [0:0]
+:OUTPUT DROP [0:0]
+:FORWARD DROP [0:0]
+-A FORWARD -p tcp --sport 307:357 --dport 53875:53904 -s 4.0.0.0/6 -d 32.0.0.0/6 -i eth1 -o eth8 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 53875:53904 --dport 307:357 -s 32.0.0.0/6 -d 4.0.0.0/6 -i eth8 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 56313:56370 --dport 37648:37717 -s 32.0.0.0/6 -d 16.0.0.0/6 -i eth8 -o eth4 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 37648:37717 --dport 56313:56370 -s 16.0.0.0/6 -d 32.0.0.0/6 -i eth4 -o eth8 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 20101:20177 --dport 6174:6243 -s 56.0.0.0/6 -d 48.0.0.0/6 -i eth14 -o eth12 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 39752:39758 --dport 45051:45052 -s 72.0.0.0/6 -d 68.0.0.0/6 -i eth18 -o eth17 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 45051:45052 --dport 39752:39758 -s 68.0.0.0/6 -d 72.0.0.0/6 -i eth17 -o eth18 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 39534:39585 --dport 6015:6022 -s 0.0.0.0/6 -d 24.0.0.0/6 -i eth0 -o eth6 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 6015:6022 --dport 39534:39585 -s 24.0.0.0/6 -d 0.0.0.0/6 -i eth6 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 58480:58577 --dport 4977:4997 -s 68.0.0.0/6 -d 60.0.0.0/6 -i eth17 -o eth15 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 28.0.0.0/6 -d 8.0.0.0/6 -i eth7 -o eth2 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 8.0.0.0/6 -d 28.0.0.0/6 -i eth2 -o eth7 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 52293:52319 --dport 63899:63958 -s 68.0.0.0/6 -d 20.0.0.0/6 -i eth17 -o eth5 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 63899:63958 --dport 52293:52319 -s 20.0.0.0/6 -d 68.0.0.0/6 -i eth5 -o eth17 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 46516:46558 --dport 25194:25246 -s 52.0.0.0/6 -d 56.0.0.0/6 -i eth13 -o eth14 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 25194:25246 --dport 46516:46558 -s 56.0.0.0/6 -d 52.0.0.0/6 -i eth14 -o eth13 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 13640:13647 --dport 51514:51517 -s 72.0.0.0/6 -d 52.0.0.0/6 -i eth18 -o eth13 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 51514:51517 --dport 13640:13647 -s 52.0.0.0/6 -d 72.0.0.0/6 -i eth13 -o eth18 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 48.0.0.0/6 -d 36.0.0.0/6 -i eth12 -o eth9 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 36.0.0.0/6 -d 48.0.0.0/6 -i eth9 -o eth12 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 47626:47674 --dport 48605:48655 -s 60.0.0.0/6 -d 68.0.0.0/6 -i eth15 -o eth17 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 48605:48655 --dport 47626:47674 -s 68.0.0.0/6 -d 60.0.0.0/6 -i eth17 -o eth15 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 60401:60457 --dport 15239:15270 -s 68.0.0.0/6 -d 56.0.0.0/6 -i eth17 -o eth14 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 15239:15270 --dport 60401:60457 -s 56.0.0.0/6 -d 68.0.0.0/6 -i eth14 -o eth17 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 20931:20949 --dport 58156:58174 -s 56.0.0.0/6 -d 68.0.0.0/6 -i eth14 -o eth17 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 47537:47542 --dport 16654:16687 -s 12.0.0.0/6 -d 0.0.0.0/6 -i eth3 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 65066:65086 --dport 44293:44333 -s 0.0.0.0/6 -d 52.0.0.0/6 -i eth0 -o eth13 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 44293:44333 --dport 65066:65086 -s 52.0.0.0/6 -d 0.0.0.0/6 -i eth13 -o eth0 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 35612:35675 --dport 33477:33545 -s 40.0.0.0/6 -d 28.0.0.0/6 -i eth10 -o eth7 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 33477:33545 --dport 35612:35675 -s 28.0.0.0/6 -d 40.0.0.0/6 -i eth7 -o eth10 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 64798:64894 --dport 6459:6483 -s 16.0.0.0/6 -d 60.0.0.0/6 -i eth4 -o eth15 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 6459:6483 --dport 64798:64894 -s 60.0.0.0/6 -d 16.0.0.0/6 -i eth15 -o eth4 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 41610:41638 --dport 1985:1995 -s 28.0.0.0/6 -d 36.0.0.0/6 -i eth7 -o eth9 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 33709:33763 --dport 28477:28552 -s 76.0.0.0/6 -d 28.0.0.0/6 -i eth19 -o eth7 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 28477:28552 --dport 33709:33763 -s 28.0.0.0/6 -d 76.0.0.0/6 -i eth7 -o eth19 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 26148:26180 --dport 23448:23477 -s 4.0.0.0/6 -d 0.0.0.0/6 -i eth1 -o eth0 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 23448:23477 --dport 26148:26180 -s 0.0.0.0/6 -d 4.0.0.0/6 -i eth0 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 16938:17007 --dport 45408:45466 -s 28.0.0.0/6 -d 56.0.0.0/6 -i eth7 -o eth14 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 45408:45466 --dport 16938:17007 -s 56.0.0.0/6 -d 28.0.0.0/6 -i eth14 -o eth7 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 43846:43930 --dport 32989:33005 -s 0.0.0.0/6 -d 20.0.0.0/6 -i eth0 -o eth5 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 41312:41378 --dport 28762:28784 -s 48.0.0.0/6 -d 12.0.0.0/6 -i eth12 -o eth3 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 9548:9611 --dport 42072:42152 -s 16.0.0.0/6 -d 4.0.0.0/6 -i eth4 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 42072:42152 --dport 9548:9611 -s 4.0.0.0/6 -d 16.0.0.0/6 -i eth1 -o eth4 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 6426:6486 --dport 1493:1494 -s 44.0.0.0/6 -d 36.0.0.0/6 -i eth11 -o eth9 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 1493:1494 --dport 6426:6486 -s 36.0.0.0/6 -d 44.0.0.0/6 -i eth9 -o eth11 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 13831:13907 --dport 7858:7859 -s 36.0.0.0/6 -d 56.0.0.0/6 -i eth9 -o eth14 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 44.0.0.0/6 -d 72.0.0.0/6 -i eth11 -o eth18 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p icmp -s 72.0.0.0/6 -d 44.0.0.0/6 -i eth18 -o eth11 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 31931:31941 --dport 25726:25795 -s 68.0.0.0/6 -d 16.0.0.0/6 -i eth17 -o eth4 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 294:315 --dport 53666:53732 -s 44.0.0.0/6 -d 76.0.0.0/6 -i eth11 -o eth19 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 51354:51393 --dport 19753:19834 -s 76.0.0.0/6 -d 4.0.0.0/6 -i eth19 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 19753:19834 --dport 51354:51393 -s 4.0.0.0/6 -d 76.0.0.0/6 -i eth1 -o eth19 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 40:137 --dport 42396:42466 -s 4.0.0.0/6 -d 20.0.0.0/6 -i eth1 -o eth5 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 61553:61609 --dport 19050:19124 -s 40.0.0.0/6 -d 4.0.0.0/6 -i eth10 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 28867:28924 --dport 40537:40588 -s 16.0.0.0/6 -d 36.0.0.0/6 -i eth4 -o eth9 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 40537:40588 --dport 28867:28924 -s 36.0.0.0/6 -d 16.0.0.0/6 -i eth9 -o eth4 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 10117:10187 --dport 13339:13385 -s 72.0.0.0/6 -d 12.0.0.0/6 -i eth18 -o eth3 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 13339:13385 --dport 10117:10187 -s 12.0.0.0/6 -d 72.0.0.0/6 -i eth3 -o eth18 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 28979:29065 --dport 56878:56888 -s 52.0.0.0/6 -d 4.0.0.0/6 -i eth13 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 56878:56888 --dport 28979:29065 -s 4.0.0.0/6 -d 52.0.0.0/6 -i eth1 -o eth13 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 17262:17327 --dport 33346:33395 -s 44.0.0.0/6 -d 52.0.0.0/6 -i eth11 -o eth13 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 33346:33395 --dport 17262:17327 -s 52.0.0.0/6 -d 44.0.0.0/6 -i eth13 -o eth11 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 28480:28563 --dport 12628:12660 -s 52.0.0.0/6 -d 16.0.0.0/6 -i eth13 -o eth4 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 12628:12660 --dport 28480:28563 -s 16.0.0.0/6 -d 52.0.0.0/6 -i eth4 -o eth13 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 52982:52994 --dport 31825:31854 -s 40.0.0.0/6 -d 52.0.0.0/6 -i eth10 -o eth13 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 9108:9151 --dport 8041:8046 -s 16.0.0.0/6 -d 52.0.0.0/6 -i eth4 -o eth13 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 9689:9751 --dport 7526:7547 -s 64.0.0.0/6 -d 76.0.0.0/6 -i eth16 -o eth19 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 7526:7547 --dport 9689:9751 -s 76.0.0.0/6 -d 64.0.0.0/6 -i eth19 -o eth16 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 58820:58868 --dport 48754:48799 -s 76.0.0.0/6 -d 72.0.0.0/6 -i eth19 -o eth18 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 48754:48799 --dport 58820:58868 -s 72.0.0.0/6 -d 76.0.0.0/6 -i eth18 -o eth19 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 39234:39251 --dport 19456:19459 -s 4.0.0.0/6 -d 68.0.0.0/6 -i eth1 -o eth17 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 19456:19459 --dport 39234:39251 -s 68.0.0.0/6 -d 4.0.0.0/6 -i eth17 -o eth1 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 51474:51531 --dport 47526:47602 -s 12.0.0.0/6 -d 24.0.0.0/6 -i eth3 -o eth6 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 47526:47602 --dport 51474:51531 -s 24.0.0.0/6 -d 12.0.0.0/6 -i eth6 -o eth3 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 248:278 --dport 35790:35797 -s 72.0.0.0/6 -d 20.0.0.0/6 -i eth18 -o eth5 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 35790:35797 --dport 248:278 -s 20.0.0.0/6 -d 72.0.0.0/6 -i eth5 -o eth18 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 12052:12128 --dport 16726:16743 -s 56.0.0.0/6 -d 72.0.0.0/6 -i eth14 -o eth18 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 16726:16743 --dport 12052:12128 -s 72.0.0.0/6 -d 56.0.0.0/6 -i eth18 -o eth14 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 31313:31313 --dport 17851:17912 -s 20.0.0.0/6 -d 40.0.0.0/6 -i eth5 -o eth10 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 17851:17912 --dport 31313:31313 -s 40.0.0.0/6 -d 20.0.0.0/6 -i eth10 -o eth5 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 33712:33727 --dport 53013:53017 -s 44.0.0.0/6 -d 68.0.0.0/6 -i eth11 -o eth17 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 53013:53017 --dport 33712:33727 -s 68.0.0.0/6 -d 44.0.0.0/6 -i eth17 -o eth11 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 26385:26477 --dport 39738:39788 -s 64.0.0.0/6 -d 28.0.0.0/6 -i eth16 -o eth7 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp --sport 39738:39788 --dport 26385:26477 -s 28.0.0.0/6 -d 64.0.0.0/6 -i eth7 -o eth16 -m state --state ESTABLISHED -j ACCEPT
+-A FORWARD -p udp --sport 4927:5012 --dport 39981:40023 -s 28.0.0.0/6 -d 4.0.0.0/6 -i eth7 -o eth1 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+COMMIT
